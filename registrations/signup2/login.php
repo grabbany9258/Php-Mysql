@@ -1,50 +1,33 @@
 <?php
-$users = 0;
-$success = 0;
+
+$login = 0;
+$invalid = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connection.php';
-    // echo "<br>";
 
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
+    $sql = "select * from `registration` where(username = '$username' and password = '$password')";
 
-
-
-    // $sql = "insert into `registration` (username,password) Values ('$user' ,'$pass')";
-
-    // $result = mysqli_query($con, $sql);
-
-    // if ($result) {
-    //     echo "succesfully inserted";
-    // } else {
-    //     die(mysqli_error($con));
-    // }
-
-    $sql = "Select * from `registration` where(username = '$user')";
     $result = mysqli_query($con, $sql);
 
     if ($result) {
         $num = mysqli_num_rows($result);
-        if ($num == 1) {
-            // echo "User Already Exist";
-            $users = 1;
+        if ($num > 0) {
+            // echo "Login succesfull";
+            $login = 1;
+            // session code
+            session_start();
+            $_SESSION['username'] = $username;
+            header('location:home.php');
         } else {
-            $sql = "insert into `registration` (username, password) Values('$user', '$pass')";
-
-            $result = mysqli_query($con, $sql);
-            if ($result) {
-                // echo "Username password inserted succesfully";
-                $success = 1;
-                header('location:login.php');
-            } else {
-                die(mysqli_error($con));
-            }
+            // echo "invalid data";
+            $invalid = 1;
         }
     }
 }
-
 ?>
 
 
@@ -62,18 +45,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <?php
-    if ($users) {
-        echo '<div class="alert alert-danger" role="alert">
-User Already Exist!
-</div>';
+    if ($login) {
+        echo '<div class="alert alert-success" role="alert">
+    You Have logged in succesfully!
+    </div>';
     }
 
-    // For New user insert
+    // For Invalid data error
 
-    if ($success) {
-        echo '<div class="alert alert-success" role="alert">
-User Inserted Successfully!
-</div>';
+    if ($invalid) {
+        echo '<div class="alert alert-danger" role="alert">
+    Invalid data!
+    </div>';
     }
 
     ?>
@@ -86,11 +69,11 @@ User Inserted Successfully!
                     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                         <div class="card bg-dark text-white" style="border-radius: 1rem;">
                             <div class="card-body p-5 text-center">
-                                <form action="signup.php" method="post">
+                                <form action="" method="post">
 
                                     <div class="mb-md-5 mt-md-4 ">
 
-                                        <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
+                                        <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                                         <p class="text-white-50 mb-4">Please enter your Username and password!</p>
 
                                         <div class="form-outline form-white mb-2">
@@ -105,14 +88,14 @@ User Inserted Successfully!
 
                                         <p class="small mb-2 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
 
-                                        <button type="submit" class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+                                        <button type="submit" class="btn btn-outline-light btn-lg px-5" type="submit">Log in</button>
 
 
 
                                     </div>
 
                                     <div>
-                                        <p class="mb-0">You have an account? <a href="login.php" class="text-white-50 fw-bold">Sign In</a>
+                                        <p class="mb-0">You have no account? <a href="signup.php" class="text-white-50 fw-bold">Sign Up</a>
                                         </p>
                                     </div>
                                 </form>

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if (!isset($_SESSION['username'])) {
     header('location:login.php');
@@ -18,13 +17,17 @@ if (!isset($_SESSION['username'])) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>home page</title>
+    <title>Welcome page</title>
 </head>
 
 <body>
-    <h1>Welocome
-        <?php echo $_SESSION['username']  ?>
+    <h1 class="text-center text-warning mt-5 ">Welcome
+        <?php echo $_SESSION['username']; ?>
     </h1>
+    <div class="container">
+        <a href="logout.php" class="btn btn-primary mt-5">Logout</a>
+
+    </div>
 
 
 </body>
