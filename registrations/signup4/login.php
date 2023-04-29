@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user = $_POST['username'];
     $pass = $_POST['password'];
+    // $cpass = $_POST['cpassword'];
 
 
     $sql = "select * from `registration` where (username = '$user' and password = '$pass')";
@@ -97,6 +98,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <input type="password" name="password" id="form2Example2" class="form-control" />
                                     <label class="form-label" for="form2Example2">Password</label>
                                 </div>
+
+                                <!-- Confirm Password  -->
+                                <!-- <div class="form-outline mb-4">
+                                    <input type="password" name="cpassword" id="form2Example2" class="form-control" />
+                                    <label class="form-label" for="form2Example2">Confirm Password</label>
+                                </div> -->
 
                                 <!-- 2 column grid layout for inline styling -->
                                 <div class="row mb-4">

@@ -1,12 +1,14 @@
 <?php
 $exist = 0;
 $success = 0;
+$invalid = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connection.php';
 
     $user = $_POST['username'];
     $pass = $_POST['password'];
+    $cpass = $_POST['cpassword'];
 
     // $sql = "insert into `registration` (username, password) values('$user','$pass')";
 
@@ -27,16 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // echo "Username already exist";
             $exist = 1;
         } else {
-            $sql = "insert into `registration` (username, password) values('$user','$pass')";
+            // confirm password condition
+            if ($pass === $cpass) {
 
-            $result = mysqli_query($con, $sql);
+                $sql = "insert into `registration` (username, password) values('$user','$pass')";
 
-            if ($result) {
-                // echo "Inserted Succesully";
-                $success = 1;
-                header('location:login.php');
+                $result = mysqli_query($con, $sql);
+
+                if ($result) {
+                    // echo "Inserted Succesully";
+                    $success = 1;
+                    // header('location:login.php');
+                }
             } else {
-                die(mysqli_error($con));
+                // die(mysqli_error($con));
+                $invalid = 1;
             }
         }
     }
@@ -69,6 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($success) {
             echo '<div class="alert alert-success" role="alert">
                 Congrates! <strong>User Succesfully Inserted</strong> </div>';
+        }
+
+        // Checking invalid
+
+        if ($invalid) {
+            echo '<div class="alert alert-danger" role="alert">
+                Error! <strong>Password & confirm password didnot match</strong> </div>';
         }
 
         ?>
@@ -113,6 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <label class="form-label" for="form2Example2">Password</label>
                                 </div>
 
+                                <!-- Confirm Password  -->
+                                <div class="form-outline mb-4">
+                                    <input type="password" name="cpassword" id="form2Example2" class="form-control" />
+                                    <label class="form-label" for="form2Example2">Confirm Password</label>
+                                </div>
+
                                 <!-- 2 column grid layout for inline styling -->
                                 <div class="row mb-4">
                                     <div class="col d-flex justify-content-center">
@@ -133,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
 
                                 <div>
-                                    <a href="login.php">Already a user! Sign up</a>
+                                    <a href="login.php">Already a user! Login</a>
                                 </div>
 
                             </form>
