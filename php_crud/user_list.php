@@ -13,9 +13,9 @@
 
 <body>
     <div class="container">
-        <button class="btn btn-primary mt-5 mb-3"><a href="user.php" class="text-light"> Add User</a></button>
+        <a href="add_user.php" class="btn btn-primary mt-5 mb-3"> Add User</a>
 
-        <table class="table table-striped table-borderd text-center">
+        <table class="table table-striped  text-center">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -42,8 +42,8 @@
                     <td>' . $password . '</td>
                     <td>
 
-                    <a href="update.php" class="btn btn-primary" >Edit</a>
-                    <a href="delete.php?deleteid = ' . $id . '" class="btn btn-danger">Delete</a>
+                    <a href="update.php?updateid=' . $id . '" class="btn btn-primary" >Edit</a>
+                    <a href="delete.php?deleteid=' . $id . '" class="btn btn-danger">Delete</a>
                      
                     </td>
                     
@@ -54,8 +54,6 @@
                 }
             }
             ?>
-
-
         </table>
     </div>
 
