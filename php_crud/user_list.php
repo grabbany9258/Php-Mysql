@@ -34,6 +34,8 @@
                     $email = $row['email'];
                     $mobile = $row['mobile'];
                     $password = $row['password'];
+
+                    // $table = ' <tr>
                     echo ' <tr>
                     <td>' . $id . '</td>
                     <td>' . $name . '</td>
@@ -51,6 +53,7 @@
                 </tr>
                     
                     ';
+                    // echo $table;
                 }
             }
             ?>
