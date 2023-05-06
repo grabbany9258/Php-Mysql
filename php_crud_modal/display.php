@@ -17,6 +17,7 @@ if (isset($_POST['displaySend'])) {
 
     $sql = "Select * from `crud_modal`";
     $result = $con->query($sql);
+    $number = 1;
 
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
@@ -27,16 +28,17 @@ if (isset($_POST['displaySend'])) {
 
         $table .=
             '<tr>
-        <td>' . $id . '</td>
+        <td>' . $number . '</td>
         <td>' . $name . '</td>
         <td>' . $email . '</td>
         <td>' . $mobile . '</td>
         <td>' . $address . '</td>
         <td>
-            <button class="btn btn-dark">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-dark" onclick="editUser(' . $id . ')">Edit</button>
+            <button class="btn btn-danger" onclick="deleteUser(' . $id . ')">Delete</button>
         </td>
         </tr>';
+        $number++;
     }
     $table .= '</table>';
     echo $table;

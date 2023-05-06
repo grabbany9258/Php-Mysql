@@ -61,6 +61,44 @@
         </div>
     </div>
 
+    <!-- update modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit User Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="updateName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="updateName" placeholder="Enter Name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateEmail" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="updateEmail" placeholder="Enter Email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateMobile" class="form-label">Mobile </label>
+                        <input type="text" class="form-control" id="updateMobile" placeholder="Enter Mobile Nb">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="updateAddress" placeholder="Enter Address">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark">Update</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <input type="hidden" id="hiddendata">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Script cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -113,6 +151,39 @@
                 }
 
             })
+        }
+
+        // This is for deleting user
+        function deleteUser(deleteid) {
+            $.ajax({
+                url: 'delete.php',
+                type: 'POST',
+                data: {
+                    deleteSend: deleteid
+                },
+                success: function(data, status) {
+                    displayData();
+                }
+
+            })
+        }
+
+
+        // This is for Showing Data Before update
+        function editUser(updateid) {
+            $('#hiddendata').val(updateid)
+
+            $.post("update.php", {
+                updateid: updateid
+            }, function(data, status) {
+                var userid = JSON.parse(data)
+                $('#updateName').val(userid.name);
+                $('#updateEmail').val(userid.email);
+                $('#updateMobile').val(userid.mobile);
+                $('#updateAddress').val(userid.address);
+            })
+
+            $('#updateModal').modal('show');
         }
     </script>
 </body>
