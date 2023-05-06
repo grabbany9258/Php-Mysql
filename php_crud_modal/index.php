@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark">Update</button>
+                    <button type="button" onclick="updateDetails()" class="btn btn-dark">Update</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     <input type="hidden" id="hiddendata">
                 </div>
@@ -147,6 +147,7 @@
                 },
                 success: function(data, status) {
                     // console.log(status);
+                    $('#completeModal').modal('hide');
                     displayData();
                 }
 
@@ -184,6 +185,31 @@
             })
 
             $('#updateModal').modal('show');
+        }
+
+        // onclick update event function
+        function updateDetails() {
+            var updateName = $('#updateName').val();
+            var updateEmail = $('#updateEmail').val();
+            var updateMobile = $('#updateMobile').val();
+            var updateAddress = $('#updateAddress').val();
+            var hiddendata = $('#hiddendata').val();
+
+            $.post(
+                "update.php", {
+                    updateName: updateName,
+                    updateEmail: updateEmail,
+                    updateMobile: updateMobile,
+                    updateAddress: updateAddress,
+                    hiddendata: hiddendata,
+                },
+                function(data, status) {
+                    $("#updateModal").modal('hide');
+                    displayData();
+                }
+
+            )
+
         }
     </script>
 </body>
